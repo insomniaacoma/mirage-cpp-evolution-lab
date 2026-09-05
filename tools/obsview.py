@@ -123,15 +123,32 @@ def project_reviews(events):
 
 
 def project_studio(events, snapshots):
-    """Member location/state at each checkpoint. Snapshot agent_states are
-    repository artifacts (they were written as part of the run), so source=repository;
-    fields no event ever captured are in fixtures instead."""
+    """Member location/state at each checkpoint.
+
+    Locations come from member.onboarded events as the default, overlaid by
+    member.location_changed events, then by snapshot agent_states (which may
+    omit location entirely - P1 did). Snapshot states are repository artifacts.
+    """
+    default_loc = {}
+    default_role = {}
+    for e in events:
+        p = e.get("payload", {})
+        if e["type"] == "member.onboarded":
+            default_loc[p["member_id"]] = p.get("location", "design-room")
+            default_role[p["member_id"]] = p.get("role", "")
+        elif e["type"] == "member.location_changed":
+            default_loc[p["member_id"]] = p.get("to", default_loc.get(p["member_id"]))
     out = []
     for snap in snapshots:
+        members = {}
+        for mid, st in (snap.get("agent_states") or {}).items():
+            merged = {"location": default_loc.get(mid, "design-room"), "role": default_role.get(mid, "")}
+            merged.update(st)
+            members[mid] = merged
         out.append({
             "checkpoint": snap.get("phase"),
             "run_id": snap.get("run_id"),
-            "members": snap.get("agent_states", {}),
+            "members": members,
         })
     return out
 

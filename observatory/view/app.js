@@ -13,9 +13,9 @@ const ROOMS = {
   "qa-lab": { x: 220, y: 340, w: 150, h: 110 },
 };
 const ROLE_COLOR = { lead: "#8ab4ff", gameplay: "#e0b35e", core: "#7bc99a", render: "#d97b7b", audio: "#c39bd3", tools: "#6fc7d9", qa: "#a8a8a8", owner: "#ffffff" };
-function roleColor(id) {
-  const r = (id || "").replace("member:", "");
-  for (const k of Object.keys(ROLE_COLOR)) if (r.startsWith(k)) return ROLE_COLOR[k];
+function roleColor(id, role) {
+  const r = role || "";
+  for (const k of Object.keys(ROLE_COLOR)) if (r.startsWith(k) || (id || "").replace("member:", "").startsWith(k)) return ROLE_COLOR[k];
   return "#9aa";
 }
 function esc(s) { const d = document.createElement("div"); d.textContent = String(s == null ? "" : s); return d.innerHTML; }
@@ -50,9 +50,9 @@ function runMeta() {
 /* ---------- views ---------- */
 function vStudio() {
   const cps = D.studio.items.filter(s => s.run_id === state.run);
-  const cp = cps.find(s => s.phase === state.phase) || cps[cps.length - 1] || { members: {} };
+  const cp = cps.find(s => s.checkpoint === state.phase) || cps[cps.length - 1] || { members: {} };
   const members = Object.keys(cp.members || {}).sort();
-  const chips = cps.map(s => `<span class="chip ${s.phase === cp.phase ? "on" : ""}" data-cp="${s.phase}">checkpoint ${s.phase}</span>`).join("");
+  const chips = cps.map(s => `<span class="chip ${s.checkpoint === cp.checkpoint ? "on" : ""}" data-cp="${s.checkpoint}">checkpoint ${s.checkpoint}</span>`).join("");
   let edges = "";
   const pairs = {};
   for (const d of D.discussions.items) {
@@ -77,7 +77,7 @@ function vStudio() {
     if (!room) continue;
     const dormant = st.state === "dormant";
     av += `<g class="avatar" data-m="${esc(m)}" opacity="${dormant ? 0.35 : 1}">
-      <circle cx="${room.x + room.w / 2}" cy="${room.y + 44}" r="17" fill="${roleColor(m)}" fill-opacity="0.85"/>
+      <circle cx="${room.x + room.w / 2}" cy="${room.y + 44}" r="17" fill="${roleColor(m, st.role)}" fill-opacity="0.85"/>
       <text x="${room.x + room.w / 2}" y="${room.y + 48}" text-anchor="middle" fill="#0b0c10" style="font-weight:700">${esc(short(m)[0].toUpperCase())}</text>
       <text x="${room.x + room.w / 2}" y="${room.y + 78}" text-anchor="middle">${esc(short(m))}</text>
       <text x="${room.x + room.w / 2}" y="${room.y + 93}" text-anchor="middle" class="dimt">${esc(st.state || "idle")}${state.fixture && D.fixture.studio_live[m] ? '<tspan class="fixtag"> FIXTURE</tspan>' : ""}</text>
