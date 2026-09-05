@@ -1,0 +1,49 @@
+{
+  "run_id": "RUN-0001",
+  "phase": "P2",
+  "phase_name": "Parallel Development (partial: gameplay pod in flight)",
+  "git_sha": "bbbfa27",
+  "branch": "main",
+  "issue_status": {
+    "ISS-001": "done", "ISS-002": "done",
+    "ISS-003": "done", "ISS-004": "in-progress", "ISS-005": "in-progress",
+    "ISS-006": "in-progress", "ISS-007": "in-progress",
+    "ISS-008": "done", "ISS-009": "in-progress", "ISS-010": "open",
+    "ISS-011": "done", "ISS-012": "in-review", "ISS-013": "open", "ISS-014": "in-progress"
+  },
+  "agent_states": {
+    "member:arden": { "location": "design-room", "state": "reviewing" },
+    "member:nico": { "location": "gameplay-lab", "state": "mentoring" },
+    "member:nell": { "location": "gameplay-lab", "state": "coding", "task": "ISS-004/006/007 + smoke driver" },
+    "member:vera": { "location": "systems-lab", "state": "reviewing" },
+    "member:vic": { "location": "systems-lab", "state": "waiting-for-review" },
+    "member:rin": { "location": "rendering-lab", "state": "reviewing" },
+    "member:rue": { "location": "rendering-lab", "state": "waiting-for-review" },
+    "member:kai": { "location": "audio-lab", "state": "dormant" },
+    "member:mora": { "location": "tools-lab", "state": "reviewing" },
+    "member:milo": { "location": "tools-lab", "state": "waiting-for-review" },
+    "member:dee": { "location": "qa-lab", "state": "planning" },
+    "member:dot": { "location": "qa-lab", "state": "planning" }
+  },
+  "architecture_projection": {
+    "modules": [
+      { "id": "app", "owner": "member:vera", "deps": ["raylib-5.5"] },
+      { "id": "obs-tools", "owner": "member:mora", "deps": [] }
+    ],
+    "dependencies": [
+      { "from": "app", "to": "raylib-5.5", "kind": "third-party", "adr": "ADR-0002", "call_surface": "src/main.cpp src/scene.cpp" }
+    ],
+    "module_count": 2,
+    "include_cycles": 0
+  },
+  "metrics": { "code_files": 7, "code_loc": 1210, "modules": 2, "tests": 6, "events": 105 },
+  "active_rfcs": [],
+  "active_adrs": ["ADR-0001", "ADR-0002", "ADR-0003", "ADR-0004"],
+  "open_prs": [{ "id": "PR-0003", "status": "open", "note": "scene merged; review artifact REVIEW-0003 filed" },
+                { "id": "PR-0005", "status": "pending", "note": "nell gameplay branch incoming" }],
+  "blockers": [],
+  "tests": { "count": 18, "note": "18 python (obslog) + 6 C++ (worldgraph) all green", "status": "pass" },
+  "build_status": "main builds 0 error; smoke PASS; test_worldgraph 6/6",
+  "context_budget": "moderate (~35% estimated)",
+  "ui_verification": { "method": "browser-use in-app browser + screenshots", "bugs_found": ["checkpoint field mismatch", "missing location defaults", "role color mapping", "tab highlight"], "all_fixed": true }
+}
