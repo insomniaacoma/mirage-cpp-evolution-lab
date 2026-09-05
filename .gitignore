@@ -1,0 +1,15 @@
+# build artifacts
+build*/
+out/
+cmake-build-*/
+
+# IDE / editor
+.vs/
+.idea/
+*.user
+compile_commands.json
+.cache/
+
+# python tooling
+__pycache__/
+.venv/

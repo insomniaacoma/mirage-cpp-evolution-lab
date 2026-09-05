@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mirage-observatory/event-envelope.v1",
+  "title": "MIRAGE Observatory event envelope (schema_v 1)",
+  "description": "Envelope-level validation only. Payload field requirements are defined in observatory/schema/data-model.md section 5; payload-level validation lands with ISS-008. Readers must tolerate unknown event types and ignore a truncated final line.",
+  "type": "object",
+  "required": ["seq", "ts", "type", "actor", "schema_v", "payload"],
+  "additionalProperties": false,
+  "properties": {
+    "seq": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Globally monotonic across all log files; readers sort by seq. Gaps are reported but not fatal."
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 with UTC offset."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "project.created",
+        "charter.adopted",
+        "charter.amended",
+        "member.onboarded",
+        "member.location_changed",
+        "member.task_changed",
+        "milestone.created",
+        "milestone.completed",
+        "issue.created",
+        "issue.status_changed",
+        "rfc.opened",
+        "rfc.decided",
+        "discussion.opened",
+        "discussion.turn",
+        "discussion.closed",
+        "adr.accepted",
+        "adr.superseded",
+        "pr.opened",
+        "pr.reviewed",
+        "pr.merged",
+        "pr.rejected",
+        "commit.recorded",
+        "release.tagged",
+        "module.registered",
+        "module.deprecated",
+        "module.dependency_changed",
+        "interaction.logged",
+        "metrics.snapshot"
+      ]
+    },
+    "actor": {
+      "type": "string",
+      "pattern": "^(owner|system|member:[a-z][a-z-]*)$"
+    },
+    "schema_v": {
+      "const": 1
+    },
+    "refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(issue|rfc|adr|discussion|pr|commit|release|milestone|module|member):[^\\s]+$"
+      }
+    },
+    "payload": {
+      "type": "object"
+    }
+  }
+}
