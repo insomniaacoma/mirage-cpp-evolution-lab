@@ -22,7 +22,7 @@
 | ADR | ADR-0001 已接受 |
 | 代码 | 尚无 — 将由 ISS-001 / ISS-003 创建 |
 | Observatory | 数据模型 v1 + 第一天种子事件日志已就绪（[observatory/](observatory/README.md)） |
-| Git | 尚未 init — 这是 ISS-001 的一部分，留给 Owner 亲手做 |
+| Git | 已 init（main），远端 [github.com/insomniaacoma/mirage-cpp-evolution-lab](https://github.com/insomniaacoma/mirage-cpp-evolution-lab)（private）；工具链与 CMake 骨架仍待 Owner 🎓（ISS-001） |
 
 ## 仓库地图
 

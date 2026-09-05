@@ -6,8 +6,12 @@
 | Type | infra |
 | Owner | **owner** 🎓（Mora 提供支持） |
 | Reviewer | Dee |
-| Status | open |
+| Status | in-progress |
 | Depends on | — |
+
+## 进展
+
+- 2026-09-06：`git init`（main）+ 首次 commit（`f0eef0b`）+ GitHub 远端（private，由 Owner 委托本次会话完成；仓库级 git 身份 = insomniaacoma 的 noreply 邮箱）。**工具链选型、CMake 骨架、`docs/build.md` 仍是 🎓 Owner 亲手任务。**
 
 ## 背景
 
@@ -15,7 +19,7 @@
 
 ## 需求 / 验收标准
 
-- [ ] `git init` 并完成首次 commit（包含全部文档与 `.gitignore`）。
+- [x] `git init` 并完成首次 commit（包含全部文档与 `.gitignore`）。
 - [ ] 确定工具链并写入 `docs/build.md`：编译器（建议 MSVC / VS 2022 Build Tools）、CMake ≥ 3.25、生成器（建议默认 Visual Studio，调试简单）、C++ 标准（建议 C++20）。
 - [ ] 根 `CMakeLists.txt` 定义唯一 target `mirage_m0`：一个 `src/main.cpp` 打印 `MIRAGE M0` 后正常退出。
 - [ ] `cmake -B build && cmake --build build` 一次成功；把确切命令写进 `docs/build.md`（新人照抄可复现）。
