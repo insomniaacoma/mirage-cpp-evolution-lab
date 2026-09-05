@@ -353,16 +353,29 @@ int main(int argc, char** argv) {
     if (smoke) {
         const int code = run_smoke(demo.graph, demo, scene, player, mut, built_version);
         if (code == 0) {
-            // QA probe (Dee, REVIEW-0005 follow-up): one drawn frame at the smoke
-            // end state, for eyeball geometry checks that a text log cannot give.
-            BeginDrawing();
+            // QA probe (Dee, REVIEW-0005 follow-up): one rendered frame at the
+            // smoke end state. Gate findings: (1) TakeScreenshot reads the window
+            // framebuffer, which stays black while FLAG_WINDOW_HIDDEN - capture
+            // through a render texture; (2) the player camera is wall-adjacent at
+            // the exit, useless for geometry checks - use a fixed overview cam.
+            Camera3D overview{};
+            overview.position = Vector3{11.0f, 26.0f, -12.0f};
+            overview.target = Vector3{11.0f, 0.0f, 9.0f};
+            overview.up = Vector3{0.0f, 1.0f, 0.0f};
+            overview.fovy = 50.0f;
+            overview.projection = CAMERA_PERSPECTIVE;
+            RenderTexture2D rt = LoadRenderTexture(kWindowWidth, kWindowHeight);
+            BeginTextureMode(rt);
             ClearBackground(Color{10, 10, 14, 255});
-            BeginMode3D(player_camera(player));
+            BeginMode3D(overview);
             draw_scene(scene);
             EndMode3D();
-            DrawText("SMOKE final state", 24, 24, 16, WHITE);
-            EndDrawing();
-            TakeScreenshot("smoke_final.png");
+            EndTextureMode();
+            Image img = LoadImageFromTexture(rt.texture);
+            ImageFlipVertical(&img); // GL textures are bottom-up
+            ExportImage(img, "smoke_final.png");
+            UnloadImage(img);
+            UnloadRenderTexture(rt);
         }
         CloseWindow();
         return code;
