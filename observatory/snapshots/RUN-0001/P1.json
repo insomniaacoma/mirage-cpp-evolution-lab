@@ -1,0 +1,38 @@
+{
+  "run_id": "RUN-0001",
+  "phase": "P1",
+  "phase_name": "Planning",
+  "git_sha": "66992df",
+  "branch": "main",
+  "issue_status": {
+    "ISS-001": "done", "ISS-002": "done",
+    "ISS-003": "open", "ISS-004": "open", "ISS-005": "open", "ISS-006": "open",
+    "ISS-007": "open", "ISS-008": "open", "ISS-009": "open", "ISS-010": "open",
+    "ISS-011": "in-progress", "ISS-012": "in-progress", "ISS-013": "open", "ISS-014": "open"
+  },
+  "agent_states": {
+    "member:arden": { "state": "planning" },
+    "member:vera": { "state": "coding", "task": "app shell (ISS-003)" },
+    "member:vic": { "state": "coding", "task": "WorldGraph v0 (ISS-005)" },
+    "member:mora": { "state": "reviewing" },
+    "member:milo": { "state": "coding", "task": "obslog CLI (ISS-008)" },
+    "member:nico": { "state": "idle" },
+    "member:rin": { "state": "idle" },
+    "member:kai": { "state": "dormant" },
+    "member:dee": { "state": "idle" }
+  },
+  "architecture_projection": {
+    "modules": [{ "id": "app", "status": "pending-registration", "owner": "member:vera" }],
+    "dependencies": [{ "from": "app", "to": "raylib-5.5", "kind": "third-party", "adr": "ADR-0002" }],
+    "note": "raylib call surface confined to src/main.cpp + src/scene.cpp by ADR-0002"
+  },
+  "metrics": { "code_files": 1, "code_loc": 5, "modules": 0, "tests": 0, "third_party": "raylib 5.5 fetched, gitignored" },
+  "active_rfcs": [],
+  "active_adrs": ["ADR-0001", "ADR-0002", "ADR-0003", "ADR-0004"],
+  "open_prs": [],
+  "blockers": [],
+  "tests": { "count": 0, "status": "none" },
+  "build_status": "bootstrap builds; raylib link verified via spike (exit 0)",
+  "context_budget": "ample (~50% remains estimated)",
+  "toolchain": { "compiler": "MSVC 19.4x (VS2022)", "cmake": "3.31.6", "generator": "Visual Studio 17 2022 -A x64", "cpp_standard": 20 }
+}

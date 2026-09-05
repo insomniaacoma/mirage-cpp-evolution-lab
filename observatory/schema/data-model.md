@@ -41,7 +41,7 @@
 
 ## 4. Ref 格式
 
-`issue:ISS-005` · `rfc:RFC-0002` · `adr:ADR-0001` · `discussion:D-0001` · `pr:PR-0001` · `commit:<sha>` · `release:v0.1` · `milestone:M0` · `module:app` · `member:nico`
+`issue:ISS-005` · `rfc:RFC-0002` · `adr:ADR-0001` · `discussion:D-0001` · `pr:PR-0001` · `commit:<sha>` · `release:v0.1` · `milestone:M0` · `module:app` · `member:nico` · `run:RUN-0001`（v1.1）
 
 ID 规则：Discussion `D-0001+`；PR `PR-0001+`（首个真实 PR 产生时启用）；其余见 process.md。
 

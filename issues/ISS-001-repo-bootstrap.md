@@ -4,9 +4,9 @@
 |---|---|
 | Milestone | M0 |
 | Type | infra |
-| Owner | **owner** 🎓（Mora 提供支持） |
+| Owner | **owner** 🎓（Mora 提供支持）→ 剩余项转 Agent 实现（RUN-0001 · SD-1） |
 | Reviewer | Dee |
-| Status | in-progress |
+| Status | done（RUN-0001 · P1） |
 | Depends on | — |
 
 ## 进展
@@ -21,14 +21,20 @@
 ## 需求 / 验收标准
 
 - [x] `git init` 并完成首次 commit（包含全部文档与 `.gitignore`）。
-- [ ] 确定工具链并写入 `docs/build.md`：编译器（建议 MSVC / VS 2022 Build Tools）、CMake ≥ 3.25、生成器（建议默认 Visual Studio，调试简单）、C++ 标准（建议 C++20）。
-- [ ] 根 `CMakeLists.txt` 定义唯一 target `mirage_m0`：一个 `src/main.cpp` 打印 `MIRAGE M0` 后正常退出。
-- [ ] `cmake -B build && cmake --build build` 一次成功；把确切命令写进 `docs/build.md`（新人照抄可复现）。
-- [ ] 追加 observatory 事件：`commit.recorded`、`issue.status_changed`。
+- [x] 确定工具链并写入 `docs/build.md`：编译器（建议 MSVC / VS 2022 Build Tools）、CMake ≥ 3.25、生成器（建议默认 Visual Studio，调试简单）、C++ 标准（建议 C++20）。
+- [x] 根 `CMakeLists.txt` 定义唯一 target `mirage_m0`：一个 `src/main.cpp` 打印 `MIRAGE M0` 后正常退出。
+- [x] `cmake -B build && cmake --build build` 一次成功；把确切命令写进 `docs/build.md`（新人照抄可复现）。
+- [x] 追加 observatory 事件：`commit.recorded`、`issue.status_changed`。
 
 ## Non-goals
 
 不建 CI（Dee：没有可自动验证的东西）；不选渲染库（ISS-002）；不拆任何模块；不加测试框架。
+
+## 状态注记（RUN-0001 · P1 · SD-1）
+
+- Owner 已完成 git init / 托管；剩余项（工具链、CMake、build.md）依 RUN 协议 §4.8 由 ver/vic 完成，🎓 转 Learning Hook：`docs/learning/RUN0001-P1-cmake-toolchain.md`。
+- 工具链裁决：MSVC（VS2022）+ VS 自带 CMake 3.31.6 + C++20；raylib 5.5 经 `tools/fetch_raylib.py`（代理）获取并以 `.spike/` 验证静态链接（exit 0）。
+- 证据：`build/Release/mirage_m0.exe` → `MIRAGE M0`，exit 0；构建命令已写入 `docs/build.md`。
 
 ## Notes（学习目标）
 

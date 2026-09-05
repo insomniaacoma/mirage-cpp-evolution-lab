@@ -6,7 +6,7 @@
 | Type | decision（T2：新第三方依赖） |
 | Owner | Arden 起草 RFC → **owner 裁决** 🎓 |
 | Reviewer | Rin、Vera 出意见 |
-| Status | open |
+| Status | done（RUN-0001 · P1，Autonomous Project Decision） |
 | Depends on | ISS-001 |
 
 ## 背景
@@ -30,6 +30,13 @@ M0 需要开窗口、画简单几何、读键鼠。这是项目的第一个第�
 ## Non-goals
 
 不做渲染架构设计；不讨论 Vulkan（charter §4 禁令）。
+
+## 裁决注记（RUN-0001 · P1）
+
+- 结论：**raylib 5.5**（ADR-0002，Autonomous Project Decision——Owner 未裁决，依 RUN 协议 §3 由团队决策，可被 Owner 未来 ADR supersede）。
+- Owner 曾问的问题已有答案：M0 只承担"验证玩法"；图形管线学习保留为后续独立路径（RFC-0002 Alternative A 未被拒绝）。
+- Rin 的 review 条件已写入 ADR：raylib 调用面收敛在 `src/main.cpp` + `src/scene.cpp`。
+- 证据：`.spike/` MSVC + raylib 静态链接运行 exit 0（链接组合已记录进 `docs/build.md`）。
 
 ## Notes
 

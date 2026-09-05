@@ -91,7 +91,7 @@
       "type": "array",
       "items": {
         "type": "string",
-        "pattern": "^(issue|rfc|adr|discussion|pr|commit|release|milestone|module|member):[^\\s]+$"
+        "pattern": "^(issue|rfc|adr|discussion|pr|commit|release|milestone|module|member|run):[^\\s]+$"
       }
     },
     "payload": {
