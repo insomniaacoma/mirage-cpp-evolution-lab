@@ -352,6 +352,18 @@ int main(int argc, char** argv) {
 
     if (smoke) {
         const int code = run_smoke(demo.graph, demo, scene, player, mut, built_version);
+        if (code == 0) {
+            // QA probe (Dee, REVIEW-0005 follow-up): one drawn frame at the smoke
+            // end state, for eyeball geometry checks that a text log cannot give.
+            BeginDrawing();
+            ClearBackground(Color{10, 10, 14, 255});
+            BeginMode3D(player_camera(player));
+            draw_scene(scene);
+            EndMode3D();
+            DrawText("SMOKE final state", 24, 24, 16, WHITE);
+            EndDrawing();
+            TakeScreenshot("smoke_final.png");
+        }
         CloseWindow();
         return code;
     }
