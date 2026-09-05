@@ -34,7 +34,10 @@ int main(int argc, char** argv) {
     SetTraceLogLevel(LOG_WARNING);
     if (smoke) SetConfigFlags(FLAG_WINDOW_HIDDEN);
     InitWindow(kWindowWidth, kWindowHeight, "MIRAGE//AFTERIMAGE - M0");
-    SetTargetFPS(60);
+    // Investigation (REVIEW-0001 follow-up): hidden windows get DWM-throttled well
+    // below 60fps, so smoke mode must not rely on wall-clock pacing. The real smoke
+    // driver (ISS-006/007) will step the simulation at a fixed dt instead.
+    if (!smoke) SetTargetFPS(60);
 
     // Review finding REVIEW-0001: a hidden window with no driver must not be an
     // infinite loop. The real smoke driver (ISS-006/007) replaces this guard.
