@@ -3,6 +3,13 @@ build*/
 out/
 cmake-build-*/
 
+# vendored dependencies (ADR-0002: reproducible via tools/fetch_raylib.py)
+third_party/
+
+# run-isolated worktrees / scratch (.git worktrees for parallel pods)
+.worktrees/
+.spike/
+
 # IDE / editor
 .vs/
 .idea/

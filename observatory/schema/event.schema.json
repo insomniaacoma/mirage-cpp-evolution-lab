@@ -2,11 +2,30 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mirage-observatory/event-envelope.v1",
   "title": "MIRAGE Observatory event envelope (schema_v 1)",
-  "description": "Envelope-level validation only. Payload field requirements are defined in observatory/schema/data-model.md section 5; payload-level validation lands with ISS-008. Readers must tolerate unknown event types and ignore a truncated final line.",
+  "description": "Envelope-level validation only (v1.1 per ADR-0004: run/teaching fields added as optional; schema_v stays 1 for superset compatibility). Payload field requirements are defined in observatory/schema/data-model.md section 5; payload-level validation lands with ISS-008. Readers must tolerate unknown event types and ignore a truncated final line.",
   "type": "object",
   "required": ["seq", "ts", "type", "actor", "schema_v", "payload"],
   "additionalProperties": false,
   "properties": {
+    "run_id": {
+      "type": "string",
+      "pattern": "^RUN-[0-9]{4}$",
+      "description": "Optional since v1.1 (ADR-0004)."
+    },
+    "phase_id": {
+      "type": "string",
+      "pattern": "^P[0-9]$",
+      "description": "Optional since v1.1."
+    },
+    "logical_seq": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Optional since v1.1. Monotonic within a run; UI replay order."
+    },
+    "process_mode": {
+      "type": "string",
+      "description": "Optional since v1.1. Free-form execution-mode note, e.g. pair/solo/gate."
+    },
     "seq": {
       "type": "integer",
       "minimum": 1,
@@ -47,7 +66,18 @@
         "module.deprecated",
         "module.dependency_changed",
         "interaction.logged",
-        "metrics.snapshot"
+        "metrics.snapshot",
+        "project.state_discrepancy",
+        "run.opened",
+        "run.checkpoint",
+        "run.blocked",
+        "run.resumed",
+        "mentor.question",
+        "mentor.response",
+        "learn.lookup",
+        "learn.misconception",
+        "learn.resolved",
+        "ambient.note"
       ]
     },
     "actor": {

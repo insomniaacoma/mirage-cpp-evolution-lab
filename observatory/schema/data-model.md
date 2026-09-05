@@ -90,3 +90,31 @@ ID 规则：Discussion `D-0001+`；PR `PR-0001+`（首个真实 PR 产生时启�
 ## 7. v0 明确不做
 
 viewer UI、自动 git 采集、数据库、payload 深度校验工具（ISS-008 只做 envelope + seq 检查）、成员状态自动同步。
+
+## 8. v1.1 扩展（ADR-0004 · RUN-0001）
+
+envelope 追加**可选**字段（schema_v 保持 1，超集兼容）：
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| `run_id` | string | `RUN-NNNN` |
+| `phase_id` | string | `P0`–`P6` |
+| `logical_seq` | int | run 内单调；UI 回放顺序 |
+| `process_mode` | string | 执行模式注记（pair/solo/gate…） |
+
+新增事件类型：
+
+| type | payload 必填 | 供给 |
+|---|---|---|
+| `project.state_discrepancy` | `discrepancy_id, expectation, evidence, adopted_baseline` | Dev Graph, Run Report |
+| `run.opened` | `run_id, track_goals, active_pairs` | Run View |
+| `run.checkpoint` | `run_id, phase_id, snapshot_path` | Time Machine |
+| `run.blocked` / `run.resumed` | `run_id, reason` | Run View |
+| `mentor.question` | `pair, junior, senior, question` | Mentor Lens |
+| `mentor.response` | `pair, junior, senior, response_type, direct_reason?` | Mentor Lens（direct 计入教学债务） |
+| `learn.lookup` | `member, unknown, found, credibility, adopted, timebox_steps` | Junior Lens |
+| `learn.misconception` | `member, claim, rejected_by` | Junior Lens（保留错误假设） |
+| `learn.resolved` | `member, resolution` | Junior Lens |
+| `ambient.note` | `subtype, anchor_to{type,id}, text` | Studio（默认过滤） |
+
+`ambient.note` 四条硬约束见 ADR-0004 §Decision 3。
