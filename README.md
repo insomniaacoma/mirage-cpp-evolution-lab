@@ -72,10 +72,10 @@
 
 ## 给 Owner 的下一步
 
-1. 通读 [docs/charter.md](docs/charter.md)（约 10 分钟），它是整个实验的宪法。
-2. 🎓 完成 [ISS-001](issues/ISS-001-repo-bootstrap.md)：git init、工具链选型、CMake 骨架。
-3. 裁决 RFC-0002（窗口/渲染方案，团队推荐 raylib，最终由你决定，见 [ISS-002](issues/ISS-002-rfc-window-render-choice.md)）。
-4. 之后每次会话：指定一个成员身份继续某个 Issue；会话结束前确认 observatory 日志已更新。
+1. **玩一次**：`./build/Release/mirage_m0.exe`（构建见 [docs/build.md](docs/build.md)），然后填 [docs/qa/M0-smoke.md](docs/qa/M0-smoke.md) 的人肉验收行——你对"察觉率"的判断决定 Kai 的 M1 优先级。
+2. `git push origin main --tags`（RUN-0001 未 push）。
+3. 读 [R-001](docs/retrospectives/R-001-M0.md) §三，挑 1–2 个 M1 方向。
+4. 回放本轮：`python tools/obslog.py view` 后打开 `observatory/view/index.html`（Timeline/Discussions/Studio 按 logical_seq 重放整个 RUN）。
 
 ## 会话推进话术示例
 
