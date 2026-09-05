@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>MIRAGE Observatory — OW0</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <div class="brand">MIRAGE//AFTERIMAGE <span class="dim">· Project Observatory · OW0</span></div>
+  <nav id="tabs"></nav>
+  <div class="hdr-right">
+    <label class="fixture-toggle"><input type="checkbox" id="fixture-toggle"> Show Fixture</label>
+  </div>
+</header>
+<div id="meta" class="meta"></div>
+<main id="view"></main>
+<footer class="dim">source of truth: <code>observatory/data/log/*.jsonl</code> · regenerate: <code>python tools/obsview.py</code> · append-only per ADR-0001/0004</footer>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
