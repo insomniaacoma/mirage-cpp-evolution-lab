@@ -1,0 +1,38 @@
+{
+  "run_id": "RUN-0001",
+  "phase": "P0",
+  "phase_name": "Baseline",
+  "git_sha": "8e5f7ec2ff246c768bda46c991b0568c58fb5c8a",
+  "branch": "main",
+  "issue_status": {
+    "ISS-001": "in-progress",
+    "ISS-002": "open",
+    "ISS-003": "open",
+    "ISS-004": "open",
+    "ISS-005": "open",
+    "ISS-006": "open",
+    "ISS-007": "open",
+    "ISS-008": "open",
+    "ISS-009": "open",
+    "ISS-010": "open"
+  },
+  "agent_states": {
+    "member:arden": { "location": "design-room", "state": "planning" },
+    "member:nico": { "location": "gameplay-lab", "state": "idle" },
+    "member:vera": { "location": "systems-lab", "state": "idle" },
+    "member:rin": { "location": "rendering-lab", "state": "idle" },
+    "member:kai": { "location": "audio-lab", "state": "dormant" },
+    "member:mora": { "location": "tools-lab", "state": "idle" },
+    "member:dee": { "location": "qa-lab", "state": "idle" }
+  },
+  "architecture_projection": { "modules": [], "dependencies": [], "note": "no code exists" },
+  "metrics": { "code_files": 0, "code_loc": 0, "modules": 0, "tests": 0 },
+  "active_rfcs": ["RFC-0002 (pending)"],
+  "active_adrs": ["ADR-0001"],
+  "open_prs": [],
+  "blockers": [],
+  "tests": { "count": 0, "status": "none" },
+  "build_status": "no build system yet",
+  "discrepancies": ["SD-1 ISS-001 ownership", "SD-2 network proxy"],
+  "context_budget": "ample"
+}
