@@ -1,0 +1,35 @@
+{
+  "run_id": "RUN-0001",
+  "phase": "P6",
+  "phase_name": "Retrospective (run complete)",
+  "git_sha": "post-ef1e428 (v0.1 tagged)",
+  "branch": "main",
+  "issue_status": { "ISS-001": "done", "ISS-002": "done", "ISS-003": "done", "ISS-004": "done", "ISS-005": "done", "ISS-006": "done", "ISS-007": "done", "ISS-008": "done", "ISS-009": "done", "ISS-010": "done", "ISS-011": "done", "ISS-012": "done", "ISS-013": "done", "ISS-014": "done" },
+  "agent_states": {
+    "member:arden": { "location": "design-room", "state": "idle" },
+    "member:nico": { "location": "gameplay-lab", "state": "idle" },
+    "member:vera": { "location": "systems-lab", "state": "idle" },
+    "member:rin": { "location": "rendering-lab", "state": "idle" },
+    "member:kai": { "location": "audio-lab", "state": "planning", "note": "M1 audio RFC candidate carried" },
+    "member:mora": { "location": "tools-lab", "state": "idle" },
+    "member:dee": { "location": "qa-lab", "state": "idle" }
+  },
+  "architecture_projection": {
+    "modules": [
+      { "id": "app", "owner": "member:vera", "deps": ["raylib-5.5"] },
+      { "id": "obs-tools", "owner": "member:mora", "deps": [] }
+    ],
+    "include_cycles": 0,
+    "notes": "flat src/, single target; ADR-0002 call surface held"
+  },
+  "metrics": { "code_loc": 2358, "modules": 2, "tests": 24, "clean_build_seconds": 9, "events": 134, "issues_done": 14, "rfcs": 4, "adrs": 4, "prs": 5 },
+  "active_rfcs": [],
+  "active_adrs": ["ADR-0001", "ADR-0002", "ADR-0003", "ADR-0004"],
+  "open_prs": [],
+  "blockers": [],
+  "tests": { "count": 24, "status": "pass" },
+  "build_status": "clean build 9s, smoke deterministic x5, v0.1 tagged",
+  "gates": { "intermediate": "PASSED (deferrals recorded)", "final": "PASSED" },
+  "context_budget": "low but complete (~12% remains, run finished within budget)",
+  "handoff": "observatory/handoff/RUN-0001.md (final)"
+}
