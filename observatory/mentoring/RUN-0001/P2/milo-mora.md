@@ -19,6 +19,17 @@
 
 **Expected response type:** socratic
 
-**Resolution:** （TODO — Mora）
+**S (mora) — response type: socratic:**
+> 先对齐一个事实：`obslog check` 的**用户**是谁？是"写坏日志的那个人"，还是"三个月后要重放历史的你（或 Owner）"？如果用户是后者，那 check 的职责就不是"帮写坏的人收拾"，而是"向未来的人证明这份历史哪里可信、哪里存疑"——这两种定位会导出完全不同的工具形态。你列的选项 b（repair 命令）在这两种定位下分别意味着什么？
+>
+> 第二问：你说选项 c"会不会等于鼓励手改"——那把问题反过来：**唯一合法的历史修正动作**在 RFC-0001/ADR-0004 里已经存在了，是什么？（提示：它不是 edit，它也是一个 append。那 check 在报 error 的时候，能不能把"下一个合法动作"直接印在错误信息里，而不是印"正确的行应该长什么样"？）
+>
+> 第三问留给你：深夜赶工的人不看 README，那这条纪律的执行点应该放在**文档**里，还是放在**报错文本**里？你的 reject 路径已经在这么做了——check 的 error 路径为什么不做同样的事？
 
-**Verified by:** （TODO）
+**Resolution:**（mora 记录落地结论，milo 可反驳）
+- v0 维持 report-only：check 不提供、也不暗示任何"改行"路径。你的担心成立——越清楚的 diff 越是在邀请手改。
+- 官方修正路径 = **append 一个新事件**（`project.state_discrepancy`，ADR-0004）：记录"第 N 行语义错误 + 正确语义是什么"，历史行保持原样。若行本身 JSON 损坏（不可解析），discrepancy 事件引用 `file:line` 即可——损坏本身也是历史事实。
+- v0.1 动作（记 ISS-008 follow-up，不阻塞本轮）：check 的 error 输出末尾固定打印 prescribe："do not edit history; append a project.state_discrepancy event (see ADR-0004)"。把纪律放进步错文本，而不是 README——这是你第三问的答案，也是 Mora 的工具观。
+- 选项 b/c 正式否决，理由入档。
+
+**Verified by:** milo 本轮对真实日志 0 error + 1 warning（seq 54 gap）的**如实报告**——没有为了"干净的输出"特判历史，这就是该工具未来被正确使用的文化证据。v0.1 的 prescribe 文案落地后，由 `tools/test_obslog.py` 增加 check error 输出断言固定之。
