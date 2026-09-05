@@ -50,3 +50,16 @@
 
 - 任何一条 ✗ → 建真实 bug Issue，进 P4 Rework，修复后重跑该节。
 - Dee 有权整体宣布 Gate Failed（尤其"可察觉"类主观项）。
+
+---
+
+## 实测记录（RUN-0001 · P3 Intermediate Gate + P5 Final Gate · Dot 执行、Dee 复核）
+
+- A1 构建实测：clean build+configure **9 秒**，0 error 0 warning（VS2022 / CMake 3.31.6）。
+- A2 实测：`test_worldgraph` 6/6 all checks passed，exit 0。
+- A3 实测：正常模式窗口运行正常（早期 orb cam 阶段与现玩家相机阶段均验证；人肉手感项 B1-B4 **deferred to Owner**）。
+- A4 / E 实测：`--smoke` 连跑 5 次输出**逐字节一致**：`mutation applied at frame 498 (graph version 9 -> 11)`、`exit reached at frame 809`、`SMOKE: PASS`，exit 0。
+- C1/C2/C5/D1/D2 自动化覆盖：smoke 脚本输入物理走位（与真人共用 update 路径）——B 房累计触发、C-D 封死、D-E 开启、E 抵达全部由断言保证；拓扑由行为证明。
+- C4 实测：squeeze 探针 16 checks（fire 帧门洞挤出的确定性、双向 120 帧不可穿越、单帧位移 ≤0.5u）。
+- 几何目检：`observatory/snapshots/RUN-0001/smoke-final-state.png`（离屏渲染俯视图，5 房间/门洞/封死的 C-D 与新开的 D-E 可辨）。
+- B2/B3/B4、C3（察觉率）、D3 主观项：**deferred**（Owner 交付验收 + Kai retro 议题）。
