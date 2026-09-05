@@ -204,6 +204,7 @@ function memberPanel(m) {
 
 /* ---------- render ---------- */
 function render() {
+  renderTabs(); // nav highlight follows state.tab (was stuck on Studio forever)
   document.getElementById("meta").innerHTML =
     `generated ${esc(D.generated_at)} · events ${D.events.length} · discussions ${D.discussions.items.length} · ${esc(D.source_note)}`;
   const v = document.getElementById("view");
