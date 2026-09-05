@@ -12,6 +12,7 @@
 ## 进展
 
 - 2026-09-06：`git init`（main）+ 首次 commit（`f0eef0b`）+ GitHub 远端（private，由 Owner 委托本次会话完成；仓库级 git 身份 = insomniaacoma 的 noreply 邮箱）。**工具链选型、CMake 骨架、`docs/build.md` 仍是 🎓 Owner 亲手任务。**
+- 2026-09-06：已推送到 `origin/main`（`6f0ecfd`），托管完成。直连 github.com 间歇性中断，本仓库配置了仅对 github.com 生效的代理 `http://127.0.0.1:7897`（repo-local，不影响全局配置）。
 
 ## 背景
 
