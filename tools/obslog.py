@@ -506,8 +506,19 @@ def cmd_check(args: argparse.Namespace) -> int:
 
 
 def cmd_view(args: argparse.Namespace) -> int:
-    print("not implemented yet (ISS-011)")
-    return 2
+    # ISS-011: the generator lives in tools/obsview.py (separate module so the
+    # recorder and the projector never share mutable state); this is a thin exec.
+    import runpy
+    import sys as _sys
+    from pathlib import Path
+
+    target = Path(__file__).resolve().parent / "obsview.py"
+    if not target.exists():
+        print(f"obslog view: generator not found at {target}", file=sys.stderr)
+        return 2
+    _sys.argv = [str(target)] + list(args.view_args or [])
+    runpy.run_path(str(target), run_name="__main__")
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -592,9 +603,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_view = sub.add_parser(
         "view",
-        help="read-only projections of the log (not implemented yet)",
+        help="generate observatory/view/data.js projections (ISS-011, via obsview.py)",
     )
-    p_view.set_defaults(func=cmd_view)
+    p_view.add_argument("view_args", nargs=argparse.REMAINDER, help="passed through to obsview.py")
+    p_view.set_defaults(func=cmd_view, view_args=[])
     return parser
 
 
