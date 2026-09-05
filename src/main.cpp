@@ -122,6 +122,8 @@ int main(int argc, char** argv) {
         EndDrawing();
 
         if (smoke_frames_left > 0 && --smoke_frames_left == 0) {
+            std::printf("SMOKE: scene solids=%zu decor=%zu graph_version=%d\n",
+                        scene.solids.size(), scene.decor.size(), world.version());
             std::puts("SMOKE: shell guard timeout (no world driver yet)");
             break;
         }
