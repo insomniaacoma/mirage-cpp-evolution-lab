@@ -37,6 +37,7 @@ python tools/obslog.py view    # 生成 observatory/view/data.js
 
 ## 已知坑
 
-- 直连 github.com 会 000/301：走本地代理 `127.0.0.1:7897`（SD-2）。
+- 直连 github.com 会被间歇性 RST（SNI 干扰，实测 5 次失败 4 次）：代理已配置为**仅对 github.com 生效**（`http.https://github.com.proxy`，详见 `docs/network-diagnosis.md`）。代理客户端（127.0.0.1:7897）没启动时 git 会卡住——启动它，或临时 `git -c http.https://github.com.proxy= fetch`。
 - 仓库全局 `core.autocrlf=true`：工作区 CRLF、库内 LF。observatory 校验器按行 strip `\r`（DEC-RUN0001-P1-002）。
 - raylib 静态链接需附系统库：`opengl32 gdi32 winmm user32 shell32 imm32 setupapi`（.spike 已验证的链接组合）。
+- 构建报 LNK1104 无法打开 exe：上次运行的 mirage_m0.exe 未退出，`taskkill //IM mirage_m0.exe //F`。

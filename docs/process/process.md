@@ -1,7 +1,16 @@
 # 开发流程
 
-- Version: 1 · Date: 2026-09-05
+- Version: 1.1 · Date: 2026-09-06（v1.1：双轨节奏，ADR-0005）
 - 模板见 [templates.md](templates.md)。
+
+## 0. 双轨节奏（ADR-0005）
+
+| 轨道 | 节奏模式 | 交付单位 | 质量关卡 |
+|---|---|---|---|
+| **Game**（游戏本体） | **milestone 模式**：M0→M1→…，每次 milestone 只引入少量真正的新复杂度 | milestone（tag v0.x） | DoD + Intermediate/Final Gate + Retrospective |
+| **Observatory**（观测站） | **wave 模式**：OW0→OW1→…，小粒度高频率 | wave | Wave Goal + Wave Review；T0/T1 修复可直通，不必等 Gate |
+
+两轨各自记账（Issue 的 Milestone 字段：`M*` = Game，`OW*` = Observatory），交叉依赖显式声明。节奏不同、质量底线相同：append-only、真实 review、事件记录。
 
 ## 1. 流程总览（重要功能的默认路径）
 

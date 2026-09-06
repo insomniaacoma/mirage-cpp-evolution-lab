@@ -27,7 +27,7 @@
 - **P2 流程与风险成比例。** 小修改不人为制造官僚流程；跨模块 / 新依赖 / 架构边界必须走完整流程。分级见 `docs/process/process.md`。
 - **P3 Observatory 是一级功能。** 从第一天起记录项目历史；没有记录的工作视为没有发生。
 - **P4 禁止伪造共识。** 讨论必须保留 disagreement、question、prototype request、benchmark request、rejection、compromise。Reviewer 可以 Request Changes；Merge 不是默认结果。
-- **P5 Owner 参与。** Owner 是 Project Owner + Learning Developer。涉及 ownership、lifetime、API design、数据结构、并发、架构边界、C++ 语言机制、performance 的重要任务**优先留给 Owner 亲手实现**（标记 🎓）。Agent 团队承担设计讨论、分析、review、提出方案、项目管理与观测。
+- **P5 Owner 参与。** Owner 是 Project Owner + Learning Developer。涉及 ownership、lifetime、API design、数据结构、并发、架构边界、C++ 语言机制、performance 的重要任务**默认留给 Owner 亲手实现**（标记 🎓）。Agent 团队承担设计讨论、分析、review、提出方案、项目管理与观测。**🎓 的合法履行形态扩展（v1.1，ADR-0005）**："Agent 实现 + guided Learning Hook + Guess 模式重做素材"是合法替代——条件：Hook 五要素齐全、Issue 状态注记显式记录转让、Owner 保留事后否决权。
 - **P6 信息局部性。** 公共信息只存在于 repository / Issue / RFC / ADR / PR / 正式会议记录；成员的私有推理与未公开方案只写入自己的 `docs/team/members/<id>.md`。想改别人的 API？走公开流程，不能假定对方同意。
 
 ## 4. 阶段约束（当前：Milestone 0）
@@ -54,3 +54,4 @@ M0 结束后**必须**召开第一次 Retrospective（ISS-010），由它决定�
 ## 7. 修订记录
 
 - v1（2026-09-05）：初版，随项目种子一起采纳。
+- v1.1（2026-09-06，ADR-0005）：P5 追加 🎓 履行形态扩展（Agent 实现 + Learning Hook/Guess 替代为合法形态，Owner 否决权保留）；新增认知负担政策（glossary + 观测站内容中文优先）。双轨节奏（Game=milestone / Observatory=wave）见 process.md 与 ADR-0005。
