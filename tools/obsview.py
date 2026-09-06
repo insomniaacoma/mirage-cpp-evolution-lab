@@ -22,6 +22,15 @@ VIEW_DIR = os.path.join(ROOT, "observatory", "view")
 
 TZ = timezone(timedelta(hours=8))
 
+# ADR-0005 cognitive-load policy: legacy English discussions get a Chinese
+# summary (summary_zh); discussions logged from now on are Chinese-first.
+DISCUSSION_SUMMARY_ZH = {
+    "D-0001": "Mora 提议用 append-only JSONL 做观测站历史（一行一个事件）；Dee 反对手写会 schema 漂移、要求先有校验；Mora 妥协——envelope 的 JSON Schema 当天冻结，校验器放进 ISS-008；Arden 附加三条纪律（日志唯一事实源、投影只读、改 schema 走 ADR）；Dee 有条件接受。结论 → ADR-0001。",
+    "D-0002": "选 M0 的窗口/渲染库。Rin 担心 raylib 挡住 Owner 未来的图形学习，条件是把调用面收敛到两个文件，让将来替换是真的可行；Vera 要求静态链接不要 DLL；Nico 只要快。接受 raylib 5.5 → ADR-0002（Autonomous Project Decision）。",
+    "D-0003": "OW0 观测站技术线。Ash 支持『静态 Web UI + Python generator』，但要求所有投影计算只在 generator 侧、前端只渲染，否则两处逻辑会漂移；Dot 要求 fixture 数据隔离且默认关闭，Gate 视图永远不许显示 fixture。接受方案 C → ADR-0003。",
+    "D-0004": "事件模型 v1.1：加 run/phase/logical_seq 与 mentor/learn/ambient 事件族。Arden 要求 ambient 的四条硬约束逐字进 ADR（锚定真实活动/不改状态/Gate 默认过滤/不得含技术事实）；Dee 妥协——未知事件类型在校验时只报 warning 不报 error，保证旧日志永远合法。接受 → ADR-0004。",
+}
+
 
 def load_events():
     events = []
@@ -87,6 +96,9 @@ def project_discussions(events):
                 d["outcome"] = p.get("outcome")
                 d["adr"] = p.get("adr")
                 d["stance_summary"] = p.get("stance_summary")
+    for did, d in out.items():
+        if did in DISCUSSION_SUMMARY_ZH:
+            d["summary_zh"] = DISCUSSION_SUMMARY_ZH[did]
     return [out[k] for k in order if k in out]
 
 

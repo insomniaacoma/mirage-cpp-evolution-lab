@@ -71,16 +71,24 @@ function vStudio() {
     edges += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#8ab4ff" stroke-opacity="0.35" stroke-width="${Math.min(4, w)}"/>`;
   }
   let av = "";
+  // Owner bug report (v0.1 review): members of the same pod render on top of
+  // each other because every avatar used the same room anchor. Slot them in a
+  // grid inside the room (3 per row, rows grow downward).
+  const slots = {}; // room -> next free index
   for (const m of members) {
     const st = cp.members[m] || {};
     const room = ROOMS[locOf(m)];
     if (!room) continue;
+    const idx = slots[locOf(m)] ?? 0; slots[locOf(m)] = idx + 1;
+    const col = idx % 3, row = Math.floor(idx / 3);
+    const ax = room.x + 40 + col * 44;
+    const ay = room.y + 58 + row * 52;
     const dormant = st.state === "dormant";
     av += `<g class="avatar" data-m="${esc(m)}" opacity="${dormant ? 0.35 : 1}">
-      <circle cx="${room.x + room.w / 2}" cy="${room.y + 44}" r="17" fill="${roleColor(m, st.role)}" fill-opacity="0.85"/>
-      <text x="${room.x + room.w / 2}" y="${room.y + 48}" text-anchor="middle" fill="#0b0c10" style="font-weight:700">${esc(short(m)[0].toUpperCase())}</text>
-      <text x="${room.x + room.w / 2}" y="${room.y + 78}" text-anchor="middle">${esc(short(m))}</text>
-      <text x="${room.x + room.w / 2}" y="${room.y + 93}" text-anchor="middle" class="dimt">${esc(st.state || "idle")}${state.fixture && D.fixture.studio_live[m] ? '<tspan class="fixtag"> FIXTURE</tspan>' : ""}</text>
+      <circle cx="${ax}" cy="${ay}" r="17" fill="${roleColor(m, st.role)}" fill-opacity="0.85"/>
+      <text x="${ax}" y="${ay + 4}" text-anchor="middle" fill="#0b0c10" style="font-weight:700">${esc(short(m)[0].toUpperCase())}</text>
+      <text x="${ax}" y="${ay + 30}" text-anchor="middle" style="font-size:10px">${esc(short(m))}</text>
+      <text x="${ax}" y="${ay + 42}" text-anchor="middle" class="dimt" style="font-size:10px">${esc(st.state || "idle")}${state.fixture && D.fixture.studio_live[m] ? '<tspan class="fixtag"> FIXTURE</tspan>' : ""}</text>
     </g>`;
   }
   const rooms = Object.entries(ROOMS).map(([k, r]) =>
@@ -155,7 +163,8 @@ function vDisc() {
   const step = Math.min(state.discStep, d.turns.length);
   return `<h2>Discussion Replay</h2>
   <div class="chips">${ds.map((x, i) => `<span class="chip ${i === state.disc ? "on" : ""}" data-d="${i}">${esc(x.id)}</span>`).join("")}</div>
-  <div class="panel"><b>${esc(d.topic)}</b> <span class="dim">${esc(d.participants.map(short).join(" · "))}</span></div>
+  <div class="panel"><b>${esc(d.topic)}</b> <span class="dim">${esc(d.participants.map(short).join(" · "))}</span>
+  ${d.summary_zh ? `<div style="margin-top:6px;color:var(--acc);font-size:12px">中文摘要（ADR-0005）：</div><div style="font-size:12px">${esc(d.summary_zh)}</div>` : ""}</div>
   ${d.turns.slice(0, step).map((t, i) => `<div class="ev ${i < step - 1 ? "past" : ""}"><span class="a">${esc(short(t.member))}</span> <span class="pill ${esc(t.stance)}">${esc(t.stance)}</span><br>${esc(t.text)}</div>`).join("")}
   <div style="margin:10px 0">
     <button class="act" id="dprev">◀ prev</button> <button class="act" id="dnext">next ▶</button>
